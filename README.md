@@ -20,3 +20,7 @@ And it will say:
 *because these are my packages installed from **games** repo*
 
 Just copy and paste these in your terminal, and be happy! :+1:
+
+## Oh, by the way
+
+I'm assuming you are running (open)SUSE in English.
