@@ -21,6 +21,6 @@ And it will say:
 
 Just copy and paste these in your terminal, and be happy! :+1:
 
-## Oh, by the way
+## Changelog
 
-I'm assuming you are running (open)SUSE in English.
+August 24, added support to regular expressions! So it will run on any language, in a more **elegant** way.

@@ -1,32 +1,33 @@
 #!/usr/bin/python3
 import subprocess
-repo = str(input('Insert repo name: '))
-string = subprocess.check_output(["zypper", "search", "--installed-only", "--repo", repo])
-'''unmerge = str(input('Do you want to remove packages that appear in some other repo?\nIf yes, type in the repository name'))
-if not unmerge:
-    print("OK! No repositories will be considered...")
+import re
 
-'''
-all_description = []
-#all_description = string.replace("b'Loading repository data...", "").replace("Reading installed packages...", "").replace("\n\n\nS | Name                                 | Summary                  | Type   \n--+--------------------------------------+--------------------------+--------\n", "").replace(split('|')
-all_description = str(string).replace("b'Loading repository data...\\nReading installed packages...\\n\\nS | Name               | Summary                                                 | Type   \\n--+--------------------+---------------------------------------------------------+--------\\n", "").split('|')
-packages = []
-# How many packages are there?
+def treatInput(raw_input):
+    #Removing the header
+    m = re.sub(b'(((\w*\W)*\n*)\n(S \| (\w*\W*)\| (\w*\W*)\| (\w*))(\W)*\n)', b'', raw_input)
 
-import math
-total_pkg = math.floor(len(all_description)/3)
-aid = 1
-for idx,notSureIfPackage in enumerate(all_description):
-    
-    while aid < len(all_description):
-        packages.append(all_description[aid].replace(" ", ""))
-        aid = aid+3
-    
-    packages
-    #print("end")
+    x = []
 
-zypp = ""
-for pkg in packages:
-    zypp = zypp+" "+pkg
+    all_lines = m.splitlines()
 
-print("sudo zypper rm"+zypp)
+    for all_shit in all_lines:
+        s = re.search(b'((?:\w\W\|\W)(\w*)([\W*\w*_*-*].*))', all_shit)
+        x.append(s.group(2).decode("utf-8"))
+        '''s = re.search(b'((?:\w\W\|\W)(\w*)([\W*\w*_*-*].*))', m)
+        x.append(s.group(2))
+        re.sub(b'((?:\w\W\|\W)(\w*)([\W*\w*_*-*].*))', b'', m)'''
+
+    return x
+
+def getRawInput(repo_name):
+    #string = subprocess.check_output(["zypper", "search", "--installed-only", "--repo", "Packman Repository"])
+    string = subprocess.check_output(["zypper", "search", "--installed-only", "--repo", repo_name])
+
+    return string
+#This gets the string directly from zypper's output
+
+packages = treatInput(getRawInput("Packman Repository"))
+
+print("\nSo, this is the list of all packages: \n")
+print(packages)
+
